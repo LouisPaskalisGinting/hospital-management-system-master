@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -10,23 +10,31 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import "../assets/static/Dashboard.css";
+import logo from "../assets/img/logoklinik2.png";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+
+  const [latitude, setLatitude] = useState("-5.304977209759005");
+  const [longitude, setLongitude] = useState("105.19151576277606");
+  const [radius, setRadius] = useState(30);
 
   const handleViewMore = () => {
     navigate("/DataKaryawan");
   };
 
   const handleSetLocation = () => {
-    navigate("/setlokasi"); // Menambahkan navigasi ke halaman SetLokasi
+    console.log("Latitude:", latitude);
+    console.log("Longitude:", longitude);
+    console.log("Radius:", radius);
+    navigate("/setlokasi");
   };
 
   return (
     <div className="dashboard-layout">
       <nav className="sidebar">
         <div className="sidebar-header">
-          <h2>Menu</h2>
+          <img src={logo} alt="Logo" className="logo" />
         </div>
         <ul className="sidebar-menu">
           <li>
@@ -36,7 +44,7 @@ const Dashboard = () => {
           </li>
           <li>
             <a href="/karyawan">
-              <FontAwesomeIcon icon={faUsers} /> Karyawan
+              <FontAwesomeIcon icon={faUsers} /> Kehadiran Karyawan
             </a>
           </li>
           <li>
@@ -71,22 +79,22 @@ const Dashboard = () => {
           <div className="card blue-card">
             <p>KARYAWAN</p>
             <p>Jumlah: 30 Orang</p>
-            <button onClick={handleViewMore}>View Details</button>
+            <button onClick={handleViewMore}>Lihat Detail</button>
           </div>
           <div className="card red-card">
             <p>OBAT</p>
             <p>Jenis Obat: 40 Pcs</p>
-            <button>View Details</button>
+            <button>Lihat Detail</button>
           </div>
           <div className="card yellow-card">
             <p>JABATAN</p>
             <p>Total Bidang: 6 Posisi</p>
-            <button>View Details</button>
+            <button>Lihat Detail</button>
           </div>
           <div className="card green-card">
             <p>INFORMASI PAYROLL</p>
             <p>Klinik Utama Kasih Ibu</p>
-            <button>View Details</button>
+            <button>Lihat Detail</button>
           </div>
         </section>
 
@@ -96,7 +104,7 @@ const Dashboard = () => {
             <div className="map-container">
               <img
                 src="/mnt/data/image.png"
-                alt="Map showing location of Klinik Utama Kasih Ibu"
+                alt="Peta menunjukkan lokasi Klinik Utama Kasih Ibu"
               />
             </div>
             <div className="location-info">
@@ -104,15 +112,25 @@ const Dashboard = () => {
                 Lokasi Klinik (Latitude, Longitude)
                 <input
                   type="text"
-                  value="-5.304977209759005, 105.19151576277606"
-                  readOnly
+                  value={`${latitude}, ${longitude}`}
+                  onChange={(e) => {
+                    const [lat, lon] = e.target.value.split(",");
+                    setLatitude(lat ? lat.trim() : "");
+                    setLongitude(lon ? lon.trim() : "");
+                  }}
+                  placeholder="Masukkan Latitude, Longitude"
                 />
               </label>
               <label>
-                Radius
-                <input type="number" value="30" readOnly />
+                Radius (dalam meter)
+                <input
+                  type="number"
+                  value={radius}
+                  onChange={(e) => setRadius(e.target.value)}
+                  placeholder="Masukkan Radius"
+                />
               </label>
-              <button onClick={handleSetLocation}>Setting Lokasi</button>
+              <button onClick={handleSetLocation}>Set Lokasi</button>
             </div>
           </div>
         </section>

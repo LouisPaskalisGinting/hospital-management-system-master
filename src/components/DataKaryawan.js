@@ -9,6 +9,7 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "../assets/static/DataKaryawan.css";
+import logo from "../assets/img/logoklinik2.png";
 
 const EmployeeTable = () => {
   const [employees, setEmployees] = useState([
@@ -27,7 +28,7 @@ const EmployeeTable = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  // State for the form (new or edit)
+  // State untuk form tambah atau edit
   const [newEmployeeName, setNewEmployeeName] = useState("");
   const [newEmployeeId, setNewEmployeeId] = useState("");
   const [newEmployeePosition, setNewEmployeePosition] = useState("");
@@ -62,14 +63,12 @@ const EmployeeTable = () => {
     };
 
     if (isEditing) {
-      // Update the existing employee
       const updatedEmployees = [...employees];
       updatedEmployees[editEmployeeIndex] = newEmployee;
       setEmployees(updatedEmployees);
       setFilteredEmployees(updatedEmployees);
       setIsEditing(false);
     } else {
-      // Add new employee
       const updatedEmployees = [...employees, newEmployee];
       setEmployees(updatedEmployees);
       setFilteredEmployees(updatedEmployees);
@@ -104,7 +103,7 @@ const EmployeeTable = () => {
     <div className="dashboard-layout">
       <nav className="sidebar">
         <div className="sidebar-header">
-          <h2>Menu</h2>
+          <img src={logo} alt="Logo" className="logo" />
         </div>
         <ul className="sidebar-menu">
           <li>
@@ -114,7 +113,7 @@ const EmployeeTable = () => {
           </li>
           <li>
             <a href="/karyawan">
-              <FontAwesomeIcon icon={faUsers} /> Karyawan
+              <FontAwesomeIcon icon={faUsers} /> Kehadiran Karyawan
             </a>
           </li>
           <li>
@@ -141,17 +140,18 @@ const EmployeeTable = () => {
       </nav>
 
       <div className="content">
-        <h2>Data Karyawan</h2>
-        <div className="search-filter">
+        <header className="header">
+          <h2>Data Karyawan</h2>
+        </header>
+        <div className="filter">
+          <label>Filter: </label>
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search by name"
             value={search}
             onChange={handleSearchChange}
           />
-          <button className="filter-button" onClick={handleFilter}>
-            Filter
-          </button>
+          <button onClick={handleFilter}>Cari</button>
           <button
             className="add-button"
             onClick={() => {
@@ -217,7 +217,6 @@ const EmployeeTable = () => {
         </div>
       </div>
 
-      {/* Popup for Add/Edit Employee */}
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
@@ -235,14 +234,11 @@ const EmployeeTable = () => {
                 &times;
               </button>
             </div>
-            {/* ID Karyawan field */}
             <div>
               <label>ID Karyawan</label>
               {isEditing ? (
-                // Tampilkan ID sebagai teks saja saat mengedit
                 <div className="id-display">{newEmployeeId}</div>
               ) : (
-                // Tampilkan input ID saat menambah karyawan baru
                 <input
                   type="number"
                   placeholder="Masukkan ID Karyawan"
@@ -251,7 +247,6 @@ const EmployeeTable = () => {
                 />
               )}
             </div>
-            {/* Nama Karyawan field */}
             <div>
               <label>Nama Karyawan</label>
               <input
@@ -261,15 +256,17 @@ const EmployeeTable = () => {
                 onChange={(e) => setNewEmployeeName(e.target.value)}
               />
             </div>
-            {/* Jabatan field */}
             <div>
               <label>Jabatan</label>
-              <input
-                type="text"
-                placeholder="Masukkan Jabatan"
+              <select
                 value={newEmployeePosition}
                 onChange={(e) => setNewEmployeePosition(e.target.value)}
-              />
+              >
+                <option value="Admin">Admin</option>
+                <option value="Perawat">Perawat</option>
+                <option value="Farmasi">Farmasi</option>
+                <option value="Bidan">Bidan</option>
+              </select>
             </div>
             <button className="submit-button" onClick={handleAddEmployee}>
               {isEditing ? "Simpan" : "Tambahkan"}
