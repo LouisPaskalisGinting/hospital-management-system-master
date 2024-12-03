@@ -1,10 +1,3 @@
-/* Main Content */
-.main-content {
-  flex: 1;
-  padding: 20px;
-  background-color: #f9fafc;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -40,90 +33,29 @@
 }
 
 /* Top Controls */
-.top-controls {
+.payroll-controls {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  justify-content: flex-start; /* Sejajarkan ke kiri */
+  gap: 10px; /* Jarak antar elemen */
   margin-bottom: 20px;
 }
 
-.filter {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.search-box {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 250px;
+  background-color: #ffffff;
 }
-
-.filter input[type="text"] {
-  padding: 10px 15px;
-  border-radius: 20px;
-  border: 1px solid #d1d5db;
-  width: 220px;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.filter input[type="text"]:focus {
-  border-color: #1a73e8;
-}
-
-.filter button {
-  padding: 8px 15px;
-  border: 1px solid #1a73e8;
-  background-color: white;
-  color: #1a73e8;
-  border-radius: 20px;
-  font-weight: 500;
+.entries-select {
+  padding-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 70px; /* Sesuaikan lebar */
+  background-color: #ffffff;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
 }
-
-.filter button:hover {
-  background-color: #1a73e8;
-  color: white;
-}
-
-/* Show Entries Dropdown */
-.show-entries {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.show-entries label {
-  font-weight: 500;
-  color: #444;
-}
-
-.show-entries select {
-  padding: 8px 12px;
-  border-radius: 20px;
-  border: 1px solid #d1d5db;
-  outline: none;
-  font-size: 14px;
-  transition: border-color 0.3s;
-}
-
-.show-entries select:focus {
-  border-color: #1a73e8;
-}
-
-/* Export Button */
-.export-button {
-  background-color: #1a73e8;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.export-button:hover {
-  background-color: #1558b0;
-}
-
 /* Table */
 .cuti-table {
   background-color: #ffffff;

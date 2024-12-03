@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import "../assets/static/CutiView.css";
+import logo from "../assets/img/logoklinik2.png";
 
 const CutiView = () => {
   const location = useLocation();
@@ -24,7 +25,7 @@ const CutiView = () => {
     <div className="dashboard-layout">
       <nav className="sidebar">
         <div className="sidebar-header">
-          <h2>Menu</h2>
+          <img src={logo} alt="Logo" className="logo" />
         </div>
         <ul className="sidebar-menu">
           <li>
@@ -34,7 +35,8 @@ const CutiView = () => {
           </li>
           <li>
             <Link to="/karyawan">
-              <FontAwesomeIcon icon={faUsers} aria-hidden="true" /> Karyawan
+              <FontAwesomeIcon icon={faUsers} aria-hidden="true" /> Kehadiran
+              Karyawan
             </Link>
           </li>
           <li>
@@ -62,52 +64,64 @@ const CutiView = () => {
         </ul>
       </nav>
 
-      <div className="cuti-view-container">
-        <h2>Cuti Karyawan</h2>
-        <div className="cuti-details">
-          <div className="cuti-detail-item">
-            <label>ID Karyawan</label>
-            <input type="text" value={selectedCuti.idKaryawan} readOnly />
+      <div className="main-content">
+        <header className="header">
+          <h2>Cuti Karyawan</h2>
+          <div className="profile-section">
+            <span>Admin</span>
+            <div className="profile-icon">A</div>
           </div>
-          <div className="cuti-detail-item">
-            <label>Nama Karyawan</label>
-            <input type="text" value={selectedCuti.nama} readOnly />
-          </div>
-          <div className="cuti-detail-item">
-            <label>Jabatan</label>
-            <input type="text" value={selectedCuti.jabatan} readOnly />
-          </div>
-          <div className="cuti-detail-item">
-            <label>Kategori Cuti</label>
-            <input type="text" value={selectedCuti.kategoriCuti} readOnly />
-          </div>
-          <div className="cuti-detail-item">
-            <label>Keterangan Mengajukan Cuti</label>
-            <input type="text" value={selectedCuti.keterangan} readOnly />
-          </div>
-          <div className="cuti-detail-item">
-            <label>Bukti Dokumen Cuti</label>
-            <button
-              className="btn btn-primary"
-              onClick={() =>
-                window.open(
-                  `/path/to/documents/${selectedCuti.dokumen}`,
-                  "_blank"
-                )
-              }
-            >
-              Lihat Lampiran
-            </button>
-          </div>
-          <div className="cuti-detail-item">
-            <button className="btn btn-secondary" onClick={() => navigate(-1)}>
-              Close
-            </button>
+        </header>
+
+        <div className="cuti-view-container">
+          <h2>Cuti Karyawan</h2>
+          <div className="cuti-details">
+            <div className="cuti-detail-item">
+              <label>ID Karyawan</label>
+              <input type="text" value={selectedCuti.idKaryawan} readOnly />
+            </div>
+            <div className="cuti-detail-item">
+              <label>Nama Karyawan</label>
+              <input type="text" value={selectedCuti.nama} readOnly />
+            </div>
+            <div className="cuti-detail-item">
+              <label>Jabatan</label>
+              <input type="text" value={selectedCuti.jabatan} readOnly />
+            </div>
+            <div className="cuti-detail-item">
+              <label>Kategori Cuti</label>
+              <input type="text" value={selectedCuti.kategoriCuti} readOnly />
+            </div>
+            <div className="cuti-detail-item">
+              <label>Keterangan Mengajukan Cuti</label>
+              <input type="text" value={selectedCuti.keterangan} readOnly />
+            </div>
+            <div className="cuti-detail-item">
+              <label>Bukti Dokumen Cuti</label>
+              <button
+                className="btn btn-primary"
+                onClick={() =>
+                  window.open(
+                    `/path/to/documents/${selectedCuti.dokumen}`,
+                    "_blank"
+                  )
+                }
+              >
+                Lihat Lampiran
+              </button>
+            </div>
+            <div className="cuti-detail-item">
+              <button
+                className="btn btn-secondary"
+                onClick={() => navigate(-1)}
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
 export default CutiView;

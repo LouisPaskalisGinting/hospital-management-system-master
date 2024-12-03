@@ -15,7 +15,7 @@ import logo from "../assets/img/logoklinik2.png";
 const Cuti = () => {
   const navigate = useNavigate();
 
-  const [cutiData] = useState([
+  const [cutiData, setCutiData] = useState([
     {
       tanggalPengajuan: "15/10/2024",
       nama: "Karyawan 1",
@@ -59,8 +59,23 @@ const Cuti = () => {
   };
 
   const handleExport = () => {
-    // Logic for exporting data can be added here (e.g., export as CSV)
     alert("Export functionality is not implemented yet.");
+  };
+
+  const handleAccept = (idKaryawan) => {
+    setCutiData((prevData) =>
+      prevData.map((data) =>
+        data.idKaryawan === idKaryawan ? { ...data, status: "Diterima" } : data
+      )
+    );
+  };
+
+  const handleReject = (idKaryawan) => {
+    setCutiData((prevData) =>
+      prevData.map((data) =>
+        data.idKaryawan === idKaryawan ? { ...data, status: "Ditolak" } : data
+      )
+    );
   };
 
   const filteredData = cutiData.filter((data) =>
@@ -182,8 +197,18 @@ const Cuti = () => {
                       </span>
                     </td>
                     <td>
-                      <button className="action-button accept">Terima</button>
-                      <button className="action-button reject">Tolak</button>
+                      <button
+                        className="action-button accept"
+                        onClick={() => handleAccept(data.idKaryawan)}
+                      >
+                        Terima
+                      </button>
+                      <button
+                        className="action-button reject"
+                        onClick={() => handleReject(data.idKaryawan)}
+                      >
+                        Tolak
+                      </button>
                     </td>
                     <td>
                       <button

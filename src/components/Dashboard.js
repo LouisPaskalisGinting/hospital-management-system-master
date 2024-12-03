@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -11,6 +11,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import "../assets/static/Dashboard.css";
 import logo from "../assets/img/logoklinik2.png";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -19,8 +21,31 @@ const Dashboard = () => {
   const [longitude, setLongitude] = useState("105.19151576277606");
   const [radius, setRadius] = useState(30);
 
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    // Hanya inisialisasi peta jika belum ada instance peta di `mapRef`
+    if (!mapRef.current) {
+      mapRef.current = L.map("map").setView([latitude, longitude], 13);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+      }).addTo(mapRef.current);
+
+      L.marker([latitude, longitude])
+        .addTo(mapRef.current)
+        .bindPopup("Lokasi Klinik Utama Kasih Ibu")
+        .openPopup();
+    }
+  }, [latitude, longitude]);
+
   const handleViewMore = () => {
     navigate("/DataKaryawan");
+  };
+  const handleViewObat = () => {
+    navigate("/ViewObat");
+  };
+  const handleViewJabatan = () => {
+    navigate("/ViewJabatan");
   };
 
   const handleSetLocation = () => {
@@ -84,12 +109,12 @@ const Dashboard = () => {
           <div className="card red-card">
             <p>OBAT</p>
             <p>Jenis Obat: 40 Pcs</p>
-            <button>Lihat Detail</button>
+            <button onClick={handleViewObat} >Lihat Detail</button>
           </div>
           <div className="card yellow-card">
             <p>JABATAN</p>
             <p>Total Bidang: 6 Posisi</p>
-            <button>Lihat Detail</button>
+            <button onClick={handleViewJabatan} >Lihat Detail</button>
           </div>
           <div className="card green-card">
             <p>INFORMASI PAYROLL</p>
@@ -101,12 +126,7 @@ const Dashboard = () => {
         <section className="clinic-location">
           <h3>Lokasi Klinik Utama Kasih Ibu</h3>
           <div className="map-card">
-            <div className="map-container">
-              <img
-                src="/mnt/data/image.png"
-                alt="Peta menunjukkan lokasi Klinik Utama Kasih Ibu"
-              />
-            </div>
+            <div id="map" style={{ height: "400px", width: "100%" }}></div>
             <div className="location-info">
               <label>
                 Lokasi Klinik (Latitude, Longitude)
@@ -114,11 +134,12 @@ const Dashboard = () => {
                   type="text"
                   value={`${latitude}, ${longitude}`}
                   onChange={(e) => {
-                    const [lat, lon] = e.target.value.split(",");
-                    setLatitude(lat ? lat.trim() : "");
-                    setLongitude(lon ? lon.trim() : "");
+                    const [lat, lng] = e.target.value
+                      .split(",")
+                      .map((coord) => coord.trim());
+                    setLatitude(lat);
+                    setLongitude(lng);
                   }}
-                  placeholder="Masukkan Latitude, Longitude"
                 />
               </label>
               <label>
@@ -126,11 +147,10 @@ const Dashboard = () => {
                 <input
                   type="number"
                   value={radius}
-                  onChange={(e) => setRadius(e.target.value)}
-                  placeholder="Masukkan Radius"
+                  onChange={(e) => setRadius(Number(e.target.value))}
                 />
               </label>
-              <button onClick={handleSetLocation}>Set Lokasi</button>
+              <button onClick={handleSetLocation}>Setting Lokasi</button>
             </div>
           </div>
         </section>

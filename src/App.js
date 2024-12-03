@@ -19,6 +19,13 @@ import Obat from "./components/Obat";
 import Payroll from "./components/Payroll";
 import Company from "./components/Company";
 import DataKaryawan from "./components/DataKaryawan";
+import ViewObat from "./components/Viewobat";
+import DetailObat from "./components/DetailObat";
+import Tambahobat from "./components/Tambahobat";
+import KelolaStok from "./components/KelolaStok";
+import EditObat from "./components/EditObat";
+import ViewJabatan from "./components/ViewJabatan";
+import DetailGaji from "./components/DetailGaji";
 
 function App() {
   return (
@@ -41,6 +48,13 @@ function App() {
             <Route path="/payroll" element={<Payroll />} />
             <Route path="/company" element={<Company />} />
             <Route path="/datakaryawan" element={<DataKaryawan />} />
+            <Route path="/viewobat" element={<ViewObat />} />
+            <Route path="/detailobat" element={<DetailObat />} />
+            <Route path="/tambahobat" element={<Tambahobat />} />
+            <Route path="/kelolastok" element={<KelolaStok />} />
+            <Route path="/editobat" element={<EditObat />} />
+            <Route path="/viewjabatan" element={<ViewJabatan />} />
+            <Route path="/detailgaji" element={<DetailGaji />} />
           </Routes>
         </div>
       </div>
@@ -48,4 +62,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;

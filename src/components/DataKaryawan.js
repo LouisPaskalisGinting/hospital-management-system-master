@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -11,7 +11,7 @@ import {
 import "../assets/static/DataKaryawan.css";
 import logo from "../assets/img/logoklinik2.png";
 
-const EmployeeTable = () => {
+const DataKaryawan = () => {
   const [employees, setEmployees] = useState([
     { id: 112423, name: "Karyawan 1", position: "Admin" },
     { id: 527310, name: "Karyawan 2", position: "Perawat" },
@@ -32,7 +32,11 @@ const EmployeeTable = () => {
   const [newEmployeeName, setNewEmployeeName] = useState("");
   const [newEmployeeId, setNewEmployeeId] = useState("");
   const [newEmployeePosition, setNewEmployeePosition] = useState("");
-  const [editEmployeeIndex, setEditEmployeeIndex] = useState(null);
+  const [editEmployeeId, setEditEmployeeId] = useState(null);
+
+  useEffect(() => {
+    handleFilter();
+  }, [search, employees]);
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
@@ -57,37 +61,44 @@ const EmployeeTable = () => {
     }
 
     const newEmployee = {
-      id: newEmployeeId,
+      id: isEditing ? editEmployeeId : newEmployeeId,
       name: newEmployeeName,
       position: newEmployeePosition,
     };
 
     if (isEditing) {
-      const updatedEmployees = [...employees];
-      updatedEmployees[editEmployeeIndex] = newEmployee;
+      const updatedEmployees = employees.map((employee) =>
+        employee.id === editEmployeeId ? newEmployee : employee
+      );
       setEmployees(updatedEmployees);
-      setFilteredEmployees(updatedEmployees);
       setIsEditing(false);
     } else {
       const updatedEmployees = [...employees, newEmployee];
       setEmployees(updatedEmployees);
-      setFilteredEmployees(updatedEmployees);
     }
 
     setNewEmployeeName("");
     setNewEmployeeId("");
     setNewEmployeePosition("");
+    setEditEmployeeId(null);
     setShowPopup(false);
   };
 
-  const handleEditEmployee = (index) => {
-    const employee = employees[index];
-    setNewEmployeeId(employee.id);
-    setNewEmployeeName(employee.name);
-    setNewEmployeePosition(employee.position);
-    setEditEmployeeIndex(index);
-    setIsEditing(true);
-    setShowPopup(true);
+  const handleEditEmployee = (id) => {
+    const employee = employees.find((emp) => emp.id === id);
+    if (employee) {
+      setNewEmployeeId(employee.id);
+      setNewEmployeeName(employee.name);
+      setNewEmployeePosition(employee.position);
+      setEditEmployeeId(employee.id);
+      setIsEditing(true);
+      setShowPopup(true);
+    }
+  };
+
+  const handleDeleteEmployee = (id) => {
+    const updatedEmployees = employees.filter((employee) => employee.id !== id);
+    setEmployees(updatedEmployees);
   };
 
   const indexOfLastEmployee = currentPage * employeesPerPage;
@@ -151,15 +162,7 @@ const EmployeeTable = () => {
             value={search}
             onChange={handleSearchChange}
           />
-          <button onClick={handleFilter}>Cari</button>
-          <button
-            className="add-button"
-            onClick={() => {
-              setIsEditing(false);
-              setNewEmployeeId("");
-              setShowPopup(true);
-            }}
-          >
+          <button className="add-button" onClick={() => setShowPopup(true)}>
             Tambah Karyawan
           </button>
         </div>
@@ -175,7 +178,7 @@ const EmployeeTable = () => {
           </thead>
           <tbody>
             {currentEmployees.length > 0 ? (
-              currentEmployees.map((employee, index) => (
+              currentEmployees.map((employee) => (
                 <tr key={employee.id}>
                   <td>{employee.name}</td>
                   <td>{employee.id}</td>
@@ -183,11 +186,16 @@ const EmployeeTable = () => {
                   <td>
                     <button
                       className="edit-button"
-                      onClick={() => handleEditEmployee(index)}
+                      onClick={() => handleEditEmployee(employee.id)}
                     >
                       Edit
                     </button>
-                    <button className="delete-button">Hapus</button>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDeleteEmployee(employee.id)}
+                    >
+                      Hapus
+                    </button>
                   </td>
                 </tr>
               ))
@@ -220,24 +228,11 @@ const EmployeeTable = () => {
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
-            <div className="popup-header">
-              <h2>
-                {isEditing ? "Edit Data Karyawan" : "Tambah Karyawan Baru"}
-              </h2>
-              <button
-                className="close-button"
-                onClick={() => {
-                  setShowPopup(false);
-                  setIsEditing(false);
-                }}
-              >
-                &times;
-              </button>
-            </div>
+            <h2>{isEditing ? "Edit Data Karyawan" : "Tambah Karyawan Baru"}</h2>
             <div>
               <label>ID Karyawan</label>
               {isEditing ? (
-                <div className="id-display">{newEmployeeId}</div>
+                <div>{newEmployeeId}</div>
               ) : (
                 <input
                   type="number"
@@ -262,14 +257,23 @@ const EmployeeTable = () => {
                 value={newEmployeePosition}
                 onChange={(e) => setNewEmployeePosition(e.target.value)}
               >
+                <option value="">Pilih Jabatan</option>
                 <option value="Admin">Admin</option>
                 <option value="Perawat">Perawat</option>
                 <option value="Farmasi">Farmasi</option>
                 <option value="Bidan">Bidan</option>
               </select>
             </div>
-            <button className="submit-button" onClick={handleAddEmployee}>
+            <button onClick={handleAddEmployee}>
               {isEditing ? "Simpan" : "Tambahkan"}
+            </button>
+            <button
+              onClick={() => {
+                setShowPopup(false);
+                setIsEditing(false);
+              }}
+            >
+              Batal
             </button>
           </div>
         </div>
@@ -278,4 +282,4 @@ const EmployeeTable = () => {
   );
 };
 
-export default EmployeeTable;
+export default DataKaryawan;

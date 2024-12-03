@@ -1,7 +1,10 @@
-/* DataKaryawan.css */
-
+/* General Styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
 .dashboard-layout {
@@ -10,6 +13,7 @@ body {
   background-color: #f5f5f5;
 }
 
+/* Sidebar Styles */
 .sidebar {
   width: 250px;
   background-color: #f7f8fc;
@@ -51,12 +55,13 @@ body {
   font-weight: bold;
 }
 
+/* Content Styles */
 .content {
   flex: 1;
   padding: 2rem;
   background-color: #ffffff;
   overflow-y: auto;
-  margin-left: 10px; /* Disesuaikan untuk memberikan ruang pada sidebar */
+  margin-left: 10px;
 }
 
 .content h2 {
@@ -66,25 +71,28 @@ body {
 }
 
 .search-filter {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+  padding: 10px 20px;
 }
 
 .add-button {
-  padding: 10px 20px;
-  color: #ffffff;
-  background-color: #0a74da;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
   border: none;
   border-radius: 5px;
+  font-size: 0.9rem;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .add-button:hover {
   background-color: #084c9f;
 }
 
+/* Table and Form Controls */
 .cuti-table .controls {
   display: flex;
   align-items: center;
@@ -121,11 +129,12 @@ body {
 
 .employee-table th {
   color: #666;
+  background-color: #ccc;
   font-weight: bold;
 }
 
 .employee-table tr:nth-child(odd) {
-  background-color: #f7f8fc;
+  background-color: rgba(239, 239, 239, 0.9);
 }
 
 .employee-table .edit-button,
@@ -152,9 +161,10 @@ body {
 }
 
 .employee-table .delete-button:hover {
-  background-color: #c43b3b;
+  background-color: #f80a0a;
 }
 
+/* Pagination */
 .pagination {
   display: flex;
   justify-content: center;
@@ -164,7 +174,7 @@ body {
 .page-button {
   padding: 8px 12px;
   margin: 0 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #9e0b0b;
   background-color: #ffffff;
   cursor: pointer;
   border-radius: 5px;
@@ -178,68 +188,79 @@ body {
 .page-button:hover {
   background-color: #e1e5ee;
 }
-
+/* Popup Styles */
 .popup {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.popup-content {
-  background-color: #ffffff;
-  padding: 2rem;
-  border-radius: 8px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 400px;
-  position: relative;
-}
-
-.popup-header h2 {
-  color: #333;
-}
-
-.close-button {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 1rem;
-  color: #333;
-  cursor: pointer;
-  padding: 12px 20px;
+  background-color: #ffffff;
+  padding: 20px;
   border-radius: 10px;
-  background-color: #eb5757;
-  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
-.close-button:hover {
-  background-color: #c43b3b;
+.popup-content h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
 }
 
-.submit-button {
-  padding: 10px;
-  color: #ffffff;
-  background-color: #0a74da;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.submit-button:hover {
-  background-color: #084c9f;
+.popup-content label {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 5px;
 }
 
 .popup-content input,
 .popup-content select {
   width: 100%;
-  padding: 8px;
-  margin-bottom: 1rem;
-  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.popup-content button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.close-button {
+  background-color: #6c757d;
+  color: white;
+  margin-left: 10px;
+}
+
+.close-button:hover {
+  background-color: #5a6268;
+  transform: scale(1.05);
+}
+
+/* Overlay for Popup */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }

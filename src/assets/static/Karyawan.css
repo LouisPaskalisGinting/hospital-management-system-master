@@ -1,8 +1,15 @@
+.sidebar-header {
+  text-align: center;
+  width: 150px;
+  height: auto;
+}
+
 .main-content {
-  background-color: #ffffff;
+  background-color: #ec5b5b;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-left: 10px; /* Disesuaikan untuk memberikan ruang pada sidebar */
+  overflow-y: auto; /* Memastikan scroll muncul jika konten terlalu panjang */
+  box-sizing: border-box; /* Untuk memasukkan padding dalam ukuran elemen */
 }
 
 .profile-section {

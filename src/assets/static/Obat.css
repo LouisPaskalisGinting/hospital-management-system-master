@@ -1,0 +1,86 @@
+.obat-container {
+  padding: 20px;
+  background-color: #f8f8f8;
+}
+
+.tambah-obat-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  float: right;
+}
+
+.obat-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.obat-table th,
+.obat-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.obat-table th {
+  background-color: #f1f1f1;
+  color: #333;
+  font-weight: bold;
+}
+
+.kelola-stok-btn,
+.detail-btn,
+.edit-btn,
+.hapus-btn {
+  background-color: #e2e6ea;
+  color: #333;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  margin: 0 2px;
+  border-radius: 4px;
+}
+
+.kelola-stok-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.detail-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.edit-btn {
+  background-color: #418dd0;
+  color: rgb(251, 250, 254);
+}
+
+.hapus-btn {
+  background-color: #f40404;
+  color: white;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
