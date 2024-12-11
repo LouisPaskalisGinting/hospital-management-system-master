@@ -15,13 +15,48 @@ const ViewJabatan = () => {
   const [search, setSearch] = useState("");
   const [entries, setEntries] = useState(6);
   const [data, setData] = useState([
-    { id: 1, nama: "Perawat", gajiPokok: 5000000, tunjangan: 1000000 },
-    { id: 2, nama: "Admin", gajiPokok: 4500000, tunjangan: 500000 },
-    { id: 3, nama: "Apoteker", gajiPokok: 4500000, tunjangan: 500000 },
-    { id: 4, nama: "Dokter Umum", gajiPokok: 7000000, tunjangan: 1500000 },
-    { id: 5, nama: "Fisioterapis", gajiPokok: 5000000, tunjangan: 1500000 },
-    { id: 6, nama: "Receptionist", gajiPokok: 3000000, tunjangan: 500000 },
-    { id: 7, nama: "Analis Lab", gajiPokok: 4000000, tunjangan: 500000 },
+    {
+      id: 1,
+      nama: "Perawat",
+      gajiPokok: 5000000,
+      tunjangan: 1000000,
+      intensif: 200000,
+    },
+    {
+      id: 2,
+      nama: "Admin",
+      gajiPokok: 4500000,
+      tunjangan: 500000,
+      intensif: 150000,
+    },
+    {
+      id: 3,
+      nama: "Apoteker",
+      gajiPokok: 4500000,
+      tunjangan: 500000,
+      intensif: 250000,
+    },
+    {
+      id: 4,
+      nama: "Dokter Umum",
+      gajiPokok: 7000000,
+      tunjangan: 1500000,
+      intensif: 500000,
+    },
+    {
+      id: 5,
+      nama: "Fisioterapis",
+      gajiPokok: 5000000,
+      tunjangan: 1500000,
+      intensif: 300000,
+    },
+    {
+      id: 6,
+      nama: "Receptionist",
+      gajiPokok: 3000000,
+      tunjangan: 500000,
+      intensif: 100000,
+    },
   ]);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -30,12 +65,15 @@ const ViewJabatan = () => {
     nama: "",
     gajiPokok: "",
     tunjangan: "",
+    intensif: "",
   });
+
   const [editJob, setEditJob] = useState({
     id: null,
     nama: "",
     gajiPokok: "",
     tunjangan: "",
+    intensif: "",
   });
 
   // Handle Search
@@ -67,12 +105,18 @@ const ViewJabatan = () => {
 
   // Save New Job
   const handleSaveNewJob = () => {
-    if (newJob.nama.trim() && newJob.gajiPokok > 0 && newJob.tunjangan > 0) {
+    if (
+      newJob.nama.trim() &&
+      newJob.gajiPokok > 0 &&
+      newJob.tunjangan > 0 &&
+      newJob.intensif >= 0
+    ) {
       const newData = {
         id: data.length + 1,
         nama: newJob.nama,
         gajiPokok: parseInt(newJob.gajiPokok),
         tunjangan: parseInt(newJob.tunjangan),
+        intensif: parseInt(newJob.intensif),
       };
       setData([...data, newData]);
       toggleAddPopup();
@@ -89,7 +133,12 @@ const ViewJabatan = () => {
 
   // Save Edited Job
   const handleSaveEditJob = () => {
-    if (editJob.nama.trim() && editJob.gajiPokok > 0 && editJob.tunjangan > 0) {
+    if (
+      editJob.nama.trim() &&
+      editJob.gajiPokok > 0 &&
+      editJob.tunjangan > 0 &&
+      editJob.intensif >= 0
+    ) {
       setData(
         data.map((item) =>
           item.id === editJob.id
@@ -98,6 +147,7 @@ const ViewJabatan = () => {
                 nama: editJob.nama,
                 gajiPokok: parseInt(editJob.gajiPokok),
                 tunjangan: parseInt(editJob.tunjangan),
+                intensif: parseInt(editJob.intensif),
               }
             : item
         )
@@ -138,8 +188,8 @@ const ViewJabatan = () => {
             </a>
           </li>
           <li>
-            <a className="active" href="/jabatan">
-              <FontAwesomeIcon icon={faUsers} /> Jabatan
+            <a className="active" href="/obat">
+              <FontAwesomeIcon icon={faPills} /> Obat
             </a>
           </li>
           <li>
@@ -189,6 +239,7 @@ const ViewJabatan = () => {
               <th>Nama Jabatan</th>
               <th>Gaji Pokok</th>
               <th>Tunjangan Kerja</th>
+              <th>Intensif</th>
               <th>Total Gaji</th>
               <th>Aksi</th>
             </tr>
@@ -199,8 +250,14 @@ const ViewJabatan = () => {
                 <td>{item.nama}</td>
                 <td>Rp. {item.gajiPokok.toLocaleString()}</td>
                 <td>Rp. {item.tunjangan.toLocaleString()}</td>
+                <td>Rp. {item.intensif.toLocaleString()}</td>
                 <td>
-                  Rp. {(item.gajiPokok + item.tunjangan).toLocaleString()}
+                  Rp.{" "}
+                  {(
+                    item.gajiPokok +
+                    item.tunjangan +
+                    item.intensif
+                  ).toLocaleString()}
                 </td>
                 <td>
                   <button className="edit" onClick={() => handleEdit(item)}>

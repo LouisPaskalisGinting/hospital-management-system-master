@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
-  color: #333;
+  color: #333333;
 }
 
 .dashboard-layout {
@@ -211,7 +211,7 @@ body {
 .popup-content label {
   display: block;
   font-size: 0.9rem;
-  color: #666;
+  color: #0d62e2;
   margin-bottom: 5px;
 }
 

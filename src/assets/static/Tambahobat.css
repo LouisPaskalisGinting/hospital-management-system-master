@@ -125,3 +125,42 @@
     font-size: 20px;
   }
 }
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  width: 300px;
+}
+
+.popup-actions button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.continue-btn {
+  background-color: green;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #FF1A1A;
+  color: white;
+}
+

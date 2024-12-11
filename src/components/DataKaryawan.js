@@ -27,8 +27,9 @@ const DataKaryawan = () => {
   const [employeesPerPage] = useState(5);
   const [showPopup, setShowPopup] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false); // State untuk pop-up konfirmasi hapus
+  const [employeeToDelete, setEmployeeToDelete] = useState(null); // Data karyawan yang akan dihapus
 
-  // State untuk form tambah atau edit
   const [newEmployeeName, setNewEmployeeName] = useState("");
   const [newEmployeeId, setNewEmployeeId] = useState("");
   const [newEmployeePosition, setNewEmployeePosition] = useState("");
@@ -96,9 +97,20 @@ const DataKaryawan = () => {
     }
   };
 
-  const handleDeleteEmployee = (id) => {
-    const updatedEmployees = employees.filter((employee) => employee.id !== id);
-    setEmployees(updatedEmployees);
+  const openDeletePopup = (employee) => {
+    setEmployeeToDelete(employee);
+    setShowDeletePopup(true);
+  };
+
+  const handleDeleteEmployee = () => {
+    if (employeeToDelete) {
+      const updatedEmployees = employees.filter(
+        (employee) => employee.id !== employeeToDelete.id
+      );
+      setEmployees(updatedEmployees);
+      setEmployeeToDelete(null);
+      setShowDeletePopup(false);
+    }
   };
 
   const indexOfLastEmployee = currentPage * employeesPerPage;
@@ -192,7 +204,7 @@ const DataKaryawan = () => {
                     </button>
                     <button
                       className="delete-button"
-                      onClick={() => handleDeleteEmployee(employee.id)}
+                      onClick={() => openDeletePopup(employee)}
                     >
                       Hapus
                     </button>
@@ -275,6 +287,19 @@ const DataKaryawan = () => {
             >
               Batal
             </button>
+          </div>
+        </div>
+      )}
+
+      {showDeletePopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <h2>Hapus Data Karyawan</h2>
+            <p>Apakah Anda yakin ingin menghapus data karyawan ini?</p>
+            <div className="popup-actions">
+              <button onClick={() => setShowDeletePopup(false)}>Batal</button>
+              <button onClick={handleDeleteEmployee}>Hapus</button>
+            </div>
           </div>
         </div>
       )}

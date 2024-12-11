@@ -44,15 +44,15 @@ const Cuti = () => {
       jabatan: "Bidan",
       status: "Diterima",
     },
-    // ... tambahkan data lebih banyak untuk mencapai 30 entri
   ]);
 
   const [entriesToShow, setEntriesToShow] = useState(5);
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [popup, setPopup] = useState({ visible: false, type: "", idKaryawan: "" });
 
-  const itemsPerPage = 5; // Menampilkan 5 entri per halaman
-  const maxEntries = 30; // Total entri maksimal
+  const itemsPerPage = 5;
+  const maxEntries = 30;
 
   const handleViewClick = (data) => {
     navigate("/cuti/view", { state: { selectedCuti: data } });
@@ -62,20 +62,25 @@ const Cuti = () => {
     alert("Export functionality is not implemented yet.");
   };
 
-  const handleAccept = (idKaryawan) => {
-    setCutiData((prevData) =>
-      prevData.map((data) =>
-        data.idKaryawan === idKaryawan ? { ...data, status: "Diterima" } : data
-      )
-    );
+  const handlePopupConfirm = () => {
+    if (popup.type === "accept") {
+      setCutiData((prevData) =>
+        prevData.map((data) =>
+          data.idKaryawan === popup.idKaryawan ? { ...data, status: "Diterima" } : data
+        )
+      );
+    } else if (popup.type === "reject") {
+      setCutiData((prevData) =>
+        prevData.map((data) =>
+          data.idKaryawan === popup.idKaryawan ? { ...data, status: "Ditolak" } : data
+        )
+      );
+    }
+    setPopup({ visible: false, type: "", idKaryawan: "" });
   };
 
-  const handleReject = (idKaryawan) => {
-    setCutiData((prevData) =>
-      prevData.map((data) =>
-        data.idKaryawan === idKaryawan ? { ...data, status: "Ditolak" } : data
-      )
-    );
+  const handlePopupCancel = () => {
+    setPopup({ visible: false, type: "", idKaryawan: "" });
   };
 
   const filteredData = cutiData.filter((data) =>
@@ -199,13 +204,13 @@ const Cuti = () => {
                     <td>
                       <button
                         className="action-button accept"
-                        onClick={() => handleAccept(data.idKaryawan)}
+                        onClick={() => setPopup({ visible: true, type: "accept", idKaryawan: data.idKaryawan })}
                       >
                         Terima
                       </button>
                       <button
                         className="action-button reject"
-                        onClick={() => handleReject(data.idKaryawan)}
+                        onClick={() => setPopup({ visible: true, type: "reject", idKaryawan: data.idKaryawan })}
                       >
                         Tolak
                       </button>
@@ -238,6 +243,30 @@ const Cuti = () => {
           </div>
         </div>
       </div>
+
+      {popup.visible && (
+        <div className="popup">
+          <div className="popup-content">
+            <h3>
+              {popup.type === "accept" ? "✔ Terima Pengajuan Cuti?" : "❗ Tolak Pengajuan Cuti?"}
+            </h3>
+            <div className="popup-actions">
+              <button
+                className="popup-button confirm"
+                style={{
+                  backgroundColor: popup.type === "accept" ? "green" : "red",
+                }}
+                onClick={handlePopupConfirm}
+              >
+                Continue
+              </button>
+              <button className="popup-button cancel" onClick={handlePopupCancel}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

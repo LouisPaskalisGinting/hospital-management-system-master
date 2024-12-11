@@ -14,62 +14,55 @@ import logo from "../assets/img/logoklinik2.png";
 
 const Obat = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // Mendapatkan data dari navigasi
+  const location = useLocation();
   const [obatData, setObatData] = useState([
-    {
-      tanggalMasuk: "12/10/2024",
-      namaObat: "Amoxicillin",
-      idObat: "D06ID2324",
-      stokTersedia: 154,
-    },
-    {
-      tanggalMasuk: "12/10/2024",
-      namaObat: "Paracetamol",
-      idObat: "D06ID2325",
-      stokTersedia: 120,
-    },
-    {
-      tanggalMasuk: "12/10/2024",
-      namaObat: "Ibuprofen",
-      idObat: "D06ID2326",
-      stokTersedia: 85,
-    },
-    {
-      tanggalMasuk: "12/10/2024",
-      namaObat: "Asam Mefenamat",
-      idObat: "D06ID2327",
-      stokTersedia: 75,
-    },
+    { tanggalMasuk: "12/10/2024", namaObat: "Amoxicillin", idObat: "D06ID2324", stokTersedia: 154 },
+    { tanggalMasuk: "12/10/2024", namaObat: "Paracetamol", idObat: "D06ID2325", stokTersedia: 120 },
+    { tanggalMasuk: "12/10/2024", namaObat: "Ibuprofen", idObat: "D06ID2326", stokTersedia: 85 },
+    { tanggalMasuk: "12/10/2024", namaObat: "Asam Mefenamat", idObat: "D06ID2327", stokTersedia: 75 },
   ]);
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // State untuk kontrol pop-up
+  const [obatToDelete, setObatToDelete] = useState(null); // State untuk menyimpan obat yang akan dihapus
 
-  // Menghapus obat
   const handleHapusObat = (idObat) => {
-    setObatData(obatData.filter((obat) => obat.idObat !== idObat));
+    const obat = obatData.find((obat) => obat.idObat === idObat);
+    if (obat.stokTersedia === 0) {
+      setObatToDelete(obat);
+      setIsPopupOpen(true); 
+    } else {
+      alert("Data obat bisa dihapus jika stok tersedia = 0") 
+    }
   };
 
-  // Menangani data obat baru yang ditambahkan dari halaman TambahObat
+  const confirmDelete = () => {
+    if (obatToDelete) {
+      setObatData(obatData.filter((obat) => obat.idObat !== obatToDelete.idObat));
+    }
+    setIsPopupOpen(false); 
+  };
+
+  const cancelDelete = () => {
+    setIsPopupOpen(false); 
+  };
+
   useEffect(() => {
     if (location.state?.obatBaru) {
       setObatData((prevData) => [...prevData, location.state.obatBaru]);
-      navigate("/obat", { replace: true }); // Reset state setelah menambahkan
+      navigate("/obat", { replace: true });
     }
   }, [location.state, navigate]);
 
-  // Menangani data obat yang diperbarui dari halaman EditObat
   useEffect(() => {
     if (location.state?.obatEdit) {
       setObatData((prevData) =>
         prevData.map((obat) =>
-          obat.idObat === location.state.obatEdit.idObat
-            ? location.state.obatEdit
-            : obat
+          obat.idObat === location.state.obatEdit.idObat ? location.state.obatEdit : obat
         )
       );
-      navigate("/obat", { replace: true }); // Reset state setelah pembaruan
+      navigate("/obat", { replace: true });
     }
   }, [location.state, navigate]);
 
-  // Mengarahkan ke halaman EditObat dengan data obat
   const handleEditObat = (obat) => {
     navigate("/EditObat", { state: { obat } });
   };
@@ -191,6 +184,24 @@ const Obat = () => {
           </div>
         </main>
       </div>
+
+      {/* Pop-up Konfirmasi */}
+      {isPopupOpen && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>Apakah anda yakin ingin menghapus data obat ini?</p>
+            <p>(Data obat bisa dihapus jika stok tersedia = 0)</p>
+            <div className="popup-actions">
+              <button className="hapus-btn" onClick={confirmDelete}>
+                Hapus
+              </button>
+              <button className="cancel-btn" onClick={cancelDelete}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

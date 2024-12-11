@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom"; // Import useNavigate untuk navigasi
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import {
   faHouse,
   faUsers,
@@ -67,6 +67,10 @@ const ViewObat = () => {
 
   const goToNextPage = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+  const handleLaporanObatClick = () => {
+    navigate("/LaporanObat"); // Navigasi ke halaman laporan obat
   };
 
   return (
@@ -143,7 +147,12 @@ const ViewObat = () => {
                 <td>{Math.floor(Math.random() * 100) + 20}</td>{" "}
                 {/* Contoh stok */}
                 <td>
-                  <button className="detail-button">Detail Obat</button>
+                  <button
+                    className="detail-button"
+                    onClick={handleLaporanObatClick} // Panggil navigasi
+                  >
+                    Laporan Obat
+                  </button>
                 </td>
               </tr>
             ))}

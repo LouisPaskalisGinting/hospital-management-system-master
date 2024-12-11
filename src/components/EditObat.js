@@ -24,6 +24,8 @@ const EditObat = () => {
     namaObat: obat.namaObat || "",
   });
 
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // Untuk menampilkan pop-up
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -33,12 +35,24 @@ const EditObat = () => {
   };
 
   const handleSave = () => {
-    updateObat(formData); // Memanggil fungsi updateObat
-    navigate("/obat"); // Kembali ke halaman daftar obat
+    // Mengirim data yang diperbarui kembali ke halaman Obat
+    navigate("/obat", { state: { obatEdit: formData } });
+
+    // Menampilkan pop-up setelah save
+    setIsPopupOpen(true);
   };
 
   const handleCancel = () => {
     navigate("/obat"); // Kembali ke halaman daftar obat
+  };
+
+  const handlePopupContinue = () => {
+    setIsPopupOpen(false); // Menutup pop-up dan melanjutkan ke halaman obat
+    navigate("/obat");
+  };
+
+  const handlePopupCancel = () => {
+    setIsPopupOpen(false); // Menutup pop-up tanpa melanjutkan
   };
 
   return (
@@ -135,6 +149,25 @@ const EditObat = () => {
           </div>
         </div>
       </div>
+
+      {/* Pop-up Konfirmasi */}
+      {isPopupOpen && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>✔️</p>
+            <p>Berhasil</p>
+            <p>Data Obat Sudah Berhasil Diedit</p>
+            <div className="popup-actions">
+              <button className="continue-btn" onClick={handlePopupContinue}>
+                Continue
+              </button>
+              <button className="cancel-btn" onClick={handlePopupCancel}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

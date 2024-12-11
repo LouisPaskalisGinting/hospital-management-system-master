@@ -17,31 +17,36 @@ const DetailGaji = () => {
   const navigate = useNavigate();
 
   // Mengambil data dari state jika ada
-  const { item } = location.state || {};
-  const [nama, setNama] = useState(item?.nama || "Karyawan 1");
-  const [idKaryawan, setIdKaryawan] = useState(item?.idKaryawan || "187742");
-  const [jabatan, setJabatan] = useState(item?.jabatan || "Perawat");
+  const { payroll } = location.state || {};
+
+  const [nama, setNama] = useState(payroll?.name || "Karyawan 1");
+  const [idKaryawan, setIdKaryawan] = useState(payroll?.employeeId || "187742");
+  const [jabatan, setJabatan] = useState(payroll?.position || "Perawat");
   const [totalGaji, setTotalGaji] = useState(
-    item?.totalGaji || "Rp. 6.000.000"
+    payroll?.totalSalary || "Rp. 6.000.000"
   );
   const [keteranganGaji, setKeteranganGaji] = useState(
-    item?.keteranganGaji || "Diambil"
+    payroll?.status || "Diambil",
+    "Belum"
   );
   const [tanggalPengambilan, setTanggalPengambilan] = useState(
-    item?.tanggalPengambilan || "2024-11-20"
+    payroll?.paymentDate || "2024-11-20"
   );
 
+  // Mengupdate data yang telah diubah
   const handleSave = () => {
     const updatedData = {
-      nama,
-      idKaryawan,
-      jabatan,
-      totalGaji,
-      keteranganGaji,
-      tanggalPengambilan,
+      name: nama,
+      employeeId: idKaryawan,
+      position: jabatan,
+      totalSalary: totalGaji,
+      status: keteranganGaji,
+      paymentDate: tanggalPengambilan,
     };
 
     alert("Data gaji telah disimpan!");
+
+    // Mengirim data yang diperbarui kembali ke halaman Payroll
     navigate("/payroll", { state: { updatedData } });
   };
 
@@ -94,16 +99,32 @@ const DetailGaji = () => {
         <h2>Detail Gaji</h2>
         <form className="detail-gaji-form">
           <label>Nama</label>
-          <input type="text" value={nama} disabled />
+          <input
+            type="text"
+            value={nama}
+            onChange={(e) => setNama(e.target.value)}
+          />
 
           <label>ID Karyawan</label>
-          <input type="text" value={idKaryawan} disabled />
+          <input
+            type="text"
+            value={idKaryawan}
+            onChange={(e) => setIdKaryawan(e.target.value)}
+          />
 
           <label>Jabatan</label>
-          <input type="text" value={jabatan} disabled />
+          <input
+            type="text"
+            value={jabatan}
+            onChange={(e) => setJabatan(e.target.value)}
+          />
 
           <label>Total Gaji</label>
-          <input type="text" value={totalGaji} disabled />
+          <input
+            type="text"
+            value={totalGaji}
+            onChange={(e) => setTotalGaji(e.target.value)}
+          />
 
           <label>Keterangan Gaji (Diambil/Belum)</label>
           <select

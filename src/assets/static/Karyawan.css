@@ -8,8 +8,8 @@
   background-color: #ec5b5b;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow-y: auto; /* Memastikan scroll muncul jika konten terlalu panjang */
-  box-sizing: border-box; /* Untuk memasukkan padding dalam ukuran elemen */
+  overflow-y: auto; 
+  box-sizing: border-box; 
 }
 
 .profile-section {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -10,84 +10,131 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../assets/static/Payroll.css";
 import logo from "../assets/img/logoklinik2.png";
-import { useNavigate } from "react-router-dom"; // Perbaikan di sini
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Payroll = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [entriesPerPage, setEntriesPerPage] = useState(6);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const navigate = useNavigate(); // Menginisialisasi useNavigate
-
-  const payrollData = [
+  const [payrollData, setPayrollData] = useState([
     {
       id: 1,
       name: "Karyawan 1",
       employeeId: "112423",
       position: "Perawat",
       salary: 5000000,
-      allowance: 1000000,
+      allowance: 500000,
+      incentive: 500000,
+      month: "Januari",
+      status: "Diambil",
     },
     {
       id: 2,
       name: "Karyawan 2",
       employeeId: "527310",
       position: "Admin",
-      salary: 5000000,
-      allowance: 500000,
+      salary: 4000000,
+      allowance: 250000,
+      incentive: 250000,
+      month: "Februari",
+      status: "Belum",
     },
     {
       id: 3,
       name: "Karyawan 3",
-      employeeId: "112424",
-      position: "Apoteker",
-      salary: 4500000,
-      allowance: 500000,
+      employeeId: "121231",
+      position: "Farmasi",
+      salary: 3000000,
+      allowance: 150000,
+      incentive: 150000,
+      month: "Februari",
+      status: "Diambil",
     },
-    // Data lainnya
-  ];
+  ]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [entriesPerPage, setEntriesPerPage] = useState(6);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filterMonth, setFilterMonth] = useState("");
 
-  const totalPages = Math.ceil(payrollData.length / entriesPerPage);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-    setCurrentPage(1);
-  };
+  // Cek data baru dari navigasi
+  useEffect(() => {
+    if (location.state && location.state.dataGajiBaru) {
+      const newPayroll = location.state.dataGajiBaru;
+      setPayrollData((prevData) => [
+        ...prevData,
+        { id: prevData.length + 1, ...newPayroll },
+      ]);
+      navigate("/payroll", { replace: true }); // Hapus state setelah diterima
+    }
+  }, [location.state, navigate]);
 
-  const handleEntriesChange = (event) => {
-    setEntriesPerPage(Number(event.target.value));
-    setCurrentPage(1);
-  };
-
-  const filteredData = payrollData.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.employeeId.includes(searchQuery) ||
-      item.position.toLowerCase().includes(searchQuery.toLowerCase())
+  // Total halaman
+  const totalPages = Math.ceil(
+    payrollData.filter(
+      (item) =>
+        (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.employeeId.includes(searchQuery) ||
+          item.position.toLowerCase().includes(searchQuery.toLowerCase())) &&
+        (filterMonth === "" || item.month === filterMonth)
+    ).length / entriesPerPage
   );
 
+  // Filter data berdasarkan pencarian dan bulan
+  const filteredData = payrollData.filter(
+    (item) =>
+      (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.employeeId.includes(searchQuery) ||
+        item.position.toLowerCase().includes(searchQuery.toLowerCase())) &&
+      (filterMonth === "" || item.month === filterMonth)
+  );
+
+  // Pagination data
   const paginatedData = filteredData.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  // Handler pencarian
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
   };
 
+  // Handler filter bulan
+  const handleFilterMonthChange = (event) => {
+    const selectedMonth = event.target.value;
+    setFilterMonth(selectedMonth === "ALL" ? "" : selectedMonth);
+    setCurrentPage(1); // Reset ke halaman pertama
+  };
+
+  // Handler jumlah entri per halaman
+  const handleEntriesChange = (e) => {
+    setEntriesPerPage(Number(e.target.value));
+    setCurrentPage(1);
+  };
+
+  // Navigasi ke halaman tambah data gaji
+  const handleAddData = () => {
+    navigate("/TambahGaji");
+  };
+
+  // Navigasi ke halaman detail gaji
+  const handleDetail = (item) => {
+    navigate("/DetailGaji", { state: { payroll: item } });
+  };
+
+  // Fitur cetak daftar gaji
   const handlePrint = () => {
     alert("Fitur Cetak Daftar Gaji belum diimplementasikan.");
   };
 
   return (
     <div className="dashboard-layout">
-      {/* Sidebar */}
       <nav className="sidebar">
         <div className="sidebar-header">
           <img src={logo} alt="Logo" className="logo" />
         </div>
         <ul className="sidebar-menu">
-          {/* Sidebar Items */}
           <li>
             <a href="/dashboard">
               <FontAwesomeIcon icon={faHouse} /> Dashboard
@@ -121,36 +168,43 @@ const Payroll = () => {
         </ul>
       </nav>
 
-      {/* Main Content */}
       <main className="content">
         <header className="header">
           <h1>Data Gaji Karyawan Klinik</h1>
-          <div className="profile-section">
-            <span>Admin</span>
-            <div className="profile-icon">A</div>
-          </div>
         </header>
         <section className="payroll-section">
           <div className="payroll-controls">
             <input
               type="text"
-              className="search-box"
               placeholder="Search"
               value={searchQuery}
               onChange={handleSearchChange}
             />
+            <select value={filterMonth} onChange={handleFilterMonthChange}>
+              <option value="ALL">Semua Bulan</option>
+              <option value="Januari">Januari</option>
+              <option value="Februari">Februari</option>
+              <option value="Maret">Maret</option>
+              <option value="April">April</option>
+              <option value="Mei">Mei</option>
+              <option value="Juni">Juni</option>
+              <option value="Juli">Juli</option>
+              <option value="Agustus">Agustus</option>
+              <option value="September">September</option>
+              <option value="Oktober">Oktober</option>
+              <option value="November">November</option>
+              <option value="Desember">Desember</option>
+            </select>
 
-            <select
-              className="entries-select"
-              value={entriesPerPage}
-              onChange={handleEntriesChange}
-            >
+            <select value={entriesPerPage} onChange={handleEntriesChange}>
               <option value={6}>6</option>
               <option value={10}>10</option>
-              <option value={20}>20</option>
             </select>
-            <button className="cetak-button" onClick={handlePrint}>
+            <button className="cetak-btn" onClick={handlePrint}>
               Cetak Daftar Gaji
+            </button>
+            <button className="tambah-btn" onClick={handleAddData}>
+              Tambah Data Gaji
             </button>
           </div>
 
@@ -162,7 +216,10 @@ const Payroll = () => {
                 <th>Jabatan</th>
                 <th>Gaji Pokok</th>
                 <th>Tunjangan Kerja</th>
+                <th>Insentif</th>
                 <th>Total Gaji</th>
+                <th>Bulan</th>
+                <th>Status</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -174,14 +231,29 @@ const Payroll = () => {
                   <td>{item.position}</td>
                   <td>Rp. {item.salary.toLocaleString()}</td>
                   <td>Rp. {item.allowance.toLocaleString()}</td>
-                  <td>Rp. {(item.salary + item.allowance).toLocaleString()}</td>
+                  <td>Rp. {item.incentive.toLocaleString()}</td>
+                  <td>
+                    Rp.{" "}
+                    {(
+                      item.salary +
+                      item.allowance +
+                      item.incentive
+                    ).toLocaleString()}
+                  </td>
+                  <td>{item.month}</td>
+                  <td
+                    className={
+                      item.status === "Diambil"
+                        ? "status-taken"
+                        : "status-pending"
+                    }
+                  >
+                    {item.status}
+                  </td>
                   <td>
                     <button
                       className="detail-button"
-                      onClick={
-                        () =>
-                          navigate("/DetailGaji", { state: { payroll: item } }) // Kirim data ke DetailGaji
-                      }
+                      onClick={() => handleDetail(item)}
                     >
                       Detail
                     </button>
@@ -198,7 +270,7 @@ const Payroll = () => {
                 className={
                   currentPage === index + 1 ? "active-page" : "page-button"
                 }
-                onClick={() => handlePageChange(index + 1)}
+                onClick={() => setCurrentPage(index + 1)}
               >
                 {index + 1}
               </button>

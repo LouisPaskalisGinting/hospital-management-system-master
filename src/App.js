@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -26,8 +26,13 @@ import KelolaStok from "./components/KelolaStok";
 import EditObat from "./components/EditObat";
 import ViewJabatan from "./components/ViewJabatan";
 import DetailGaji from "./components/DetailGaji";
+import LaporanObat from "./components/LaporanObat";
+import TambahGaji from "./components/TambahGaji";
 
 function App() {
+  // State untuk laporan obat
+  const [laporan, setLaporan] = useState([]);
+
   return (
     <Router>
       <div className="App">
@@ -51,10 +56,18 @@ function App() {
             <Route path="/viewobat" element={<ViewObat />} />
             <Route path="/detailobat" element={<DetailObat />} />
             <Route path="/tambahobat" element={<Tambahobat />} />
-            <Route path="/kelolastok" element={<KelolaStok />} />
+            <Route
+              path="/kelolastok"
+              element={<KelolaStok laporan={laporan} setLaporan={setLaporan} />}
+            />
             <Route path="/editobat" element={<EditObat />} />
             <Route path="/viewjabatan" element={<ViewJabatan />} />
             <Route path="/detailgaji" element={<DetailGaji />} />
+            <Route path="/tambahgaji" element={<TambahGaji />} />
+            <Route
+              path="/laporanobat"
+              element={<LaporanObat laporan={laporan} />}
+            />
           </Routes>
         </div>
       </div>
@@ -62,4 +75,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;

@@ -20,6 +20,8 @@ const TambahObat = () => {
     idObat: "",
     stokTersedia: "",
   });
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // State untuk kontrol pop-up
+  const [isAccepted, setIsAccepted] = useState(false); // State untuk status terima/tolak
 
   // Handle input perubahan
   const handleChange = (e) => {
@@ -30,7 +32,19 @@ const TambahObat = () => {
   // Handle submit form
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/obat", { state: { obatBaru: formData } }); // Navigasi dengan data obat baru
+    setIsPopupOpen(true); // Menampilkan pop-up setelah submit
+  };
+
+  // Handle terima
+  const handleAccept = () => {
+    setIsAccepted(true);
+    navigate("/obat", { state: { obatBaru: formData } }); // Navigasi dengan data obat baru setelah diterima
+  };
+
+  // Handle tolak
+  const handleReject = () => {
+    setIsAccepted(false);
+    setIsPopupOpen(false); // Menutup pop-up jika ditolak
   };
 
   return (
@@ -97,6 +111,7 @@ const TambahObat = () => {
                   <input
                     type="text"
                     id="tanggalMasuk"
+                    className="input-primary"
                     value={formData.tanggalMasuk}
                     readOnly
                   />
@@ -111,6 +126,7 @@ const TambahObat = () => {
                 <input
                   type="text"
                   id="namaObat"
+                  className="input-primary"
                   value={formData.namaObat}
                   onChange={handleChange}
                   placeholder="Masukkan Nama Obat"
@@ -124,6 +140,7 @@ const TambahObat = () => {
                 <input
                   type="text"
                   id="idObat"
+                  className="input-primary"
                   value={formData.idObat}
                   onChange={handleChange}
                   placeholder="Masukkan ID Obat"
@@ -137,6 +154,7 @@ const TambahObat = () => {
                 <input
                   type="number"
                   id="stokTersedia"
+                  className="input-primary"
                   value={formData.stokTersedia}
                   onChange={handleChange}
                   placeholder="Masukkan Stok Obat"
@@ -159,6 +177,25 @@ const TambahObat = () => {
           </div>
         </div>
       </div>
+
+      {/* Pop-up Konfirmasi */}
+      {isPopupOpen && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>✔️</p>
+            <p>Berhasil</p>
+            <p>Data Obat Baru Sudah Berhasil ditambahkan</p>
+            <div className="popup-actions">
+              <button className="continue-btn" onClick={handleAccept}>
+                Continue
+              </button>
+              <button className="cancel-btn" onClick={handleReject}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

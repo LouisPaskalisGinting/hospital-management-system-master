@@ -12,21 +12,54 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/img/logoklinik2.png";
 
-const KelolaStok = () => {
+const KelolaStok = ({ laporan, setLaporan }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { obat } = location.state || {}; // Terima data obat dari navigasi
-  const [tanggalMasuk] = useState(obat?.tanggalMasuk || "N/A");
-  const [jumlahMasuk] = useState(obat?.stokTersedia || 0);
+
+  // Ambil data sisa stok lama
+  const [jumlahMasuk, setJumlahMasuk] = useState(0); // Jumlah masuk default 0
   const [jumlahKeluar, setJumlahKeluar] = useState(0);
-  const [sisaStok, setSisaStok] = useState(jumlahMasuk);
+  const [sisaStok, setSisaStok] = useState(obat?.stokTersedia || 0); // Sisa stok mengikuti data lama
   const [keterangan, setKeterangan] = useState(""); // Tambahkan state untuk keterangan
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // State untuk kontrol pop-up
+
+  const updateSisaStok = (newJumlahMasuk, newJumlahKeluar) => {
+    const stokAwal = obat?.stokTersedia || 0; // Gunakan stok tersedia lama
+    const stokBaru = stokAwal + newJumlahMasuk - newJumlahKeluar;
+    setSisaStok(Math.max(stokBaru, 0)); // Hindari nilai negatif
+  };
+
+  const handleJumlahMasukChange = (value) => {
+    const numericValue = Number(value) || 0;
+    setJumlahMasuk(numericValue);
+    updateSisaStok(numericValue, jumlahKeluar);
+  };
+
+  const handleJumlahKeluarChange = (value) => {
+    const numericValue = Number(value) || 0;
+    setJumlahKeluar(numericValue);
+    updateSisaStok(jumlahMasuk, numericValue);
+  };
 
   const handleSave = () => {
-    alert(
-      `Data berhasil disimpan!\nNama Obat: ${obat.namaObat}\nJumlah Keluar: ${jumlahKeluar}\nSisa Stok: ${sisaStok}\nKeterangan: ${keterangan}`
-    );
-    navigate("/obat");
+    // Validasi data
+    if (jumlahKeluar > sisaStok) {
+      alert("Jumlah keluar tidak boleh lebih besar dari stok tersedia.");
+      return;
+    }
+
+    // Tambahkan data ke laporan
+    const newLaporan = {
+      tanggal: new Date().toLocaleDateString("id-ID"),
+      keteranganStok: jumlahMasuk > 0 ? "Masuk" : "Keluar",
+      jumlahStok: jumlahMasuk > 0 ? jumlahMasuk : jumlahKeluar,
+      keteranganLanjutan: keterangan,
+    };
+    setLaporan([...laporan, newLaporan]);
+
+    // Menampilkan pop-up setelah data disimpan
+    setIsPopupOpen(true);
   };
 
   const handleCancel = () => {
@@ -34,9 +67,13 @@ const KelolaStok = () => {
     navigate("/obat");
   };
 
-  const handleJumlahKeluarChange = (value) => {
-    setJumlahKeluar(value);
-    setSisaStok(jumlahMasuk - value);
+  const handlePopupContinue = () => {
+    setIsPopupOpen(false);
+    navigate("/obat"); // Navigasi ke halaman obat setelah melanjutkan
+  };
+
+  const handlePopupCancel = () => {
+    setIsPopupOpen(false); // Menutup pop-up tanpa melanjutkan
   };
 
   if (!obat) {
@@ -98,10 +135,10 @@ const KelolaStok = () => {
           </h2>
           <div className="kelola-stok-form">
             <div className="form-group">
-              <label>Tanggal Masuk</label>
+              <label>Sisa Stok Awal</label>
               <input
-                type="text"
-                value={tanggalMasuk}
+                type="number"
+                value={obat.stokTersedia || 0}
                 readOnly
                 className="form-control"
               />
@@ -111,7 +148,9 @@ const KelolaStok = () => {
               <input
                 type="number"
                 value={jumlahMasuk}
-                readOnly
+                onChange={(e) =>
+                  handleJumlahMasukChange(e.target.value)
+                }
                 className="form-control"
               />
             </div>
@@ -121,7 +160,7 @@ const KelolaStok = () => {
                 type="number"
                 value={jumlahKeluar}
                 onChange={(e) =>
-                  handleJumlahKeluarChange(Number(e.target.value))
+                  handleJumlahKeluarChange(e.target.value)
                 }
                 className="form-control"
               />
@@ -141,7 +180,7 @@ const KelolaStok = () => {
               <textarea
                 value={keterangan}
                 onChange={(e) => setKeterangan(e.target.value)}
-                placeholder="Masukkan alasan pengurangan obat"
+                placeholder="Masukkan alasan perubahan stok"
                 className="form-control"
                 rows="3"
               ></textarea>
@@ -157,6 +196,25 @@ const KelolaStok = () => {
           </div>
         </div>
       </div>
+
+      {/* Pop-up Konfirmasi */}
+      {isPopupOpen && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>✔️</p>
+            <p>Berhasil</p>
+            <p>Stok Obat Berhasil Diperbarui</p>
+            <div className="popup-actions">
+              <button className="continue-btn" onClick={handlePopupContinue}>
+                Continue
+              </button>
+              <button className="cancel-btn" onClick={handlePopupCancel}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
