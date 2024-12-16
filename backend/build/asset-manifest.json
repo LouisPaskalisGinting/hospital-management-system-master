@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.cad15271.css",
+    "main.js": "/static/js/main.9a86b323.js",
+    "static/js/453.c1e653fa.chunk.js": "/static/js/453.c1e653fa.chunk.js",
+    "static/media/logoklinik.png": "/static/media/logoklinik.ae9bd74ee35daa47f887.png",
+    "static/media/logoklinik2.png": "/static/media/logoklinik2.ae9bd74ee35daa47f887.png",
+    "index.html": "/index.html",
+    "main.cad15271.css.map": "/static/css/main.cad15271.css.map",
+    "main.9a86b323.js.map": "/static/js/main.9a86b323.js.map",
+    "453.c1e653fa.chunk.js.map": "/static/js/453.c1e653fa.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cad15271.css",
+    "static/js/main.9a86b323.js"
+  ]
+}

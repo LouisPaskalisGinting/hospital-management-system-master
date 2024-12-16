@@ -1,0 +1,226 @@
+/* General styles for the dashboard layout */
+.dashboard-layout {
+  display: flex;
+}
+
+/* Sidebar styles */
+.sidebar {
+  width: 250px;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.sidebar-header h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 10px;
+}
+
+.sidebar-menu a {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-menu a.active {
+  font-weight: bold;
+}
+
+.sidebar-menu a:hover {
+  color: #007bff; /* Change color on hover */
+}
+
+/* Content area styles */
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+/* Search and filter styles */
+.search-filter {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-filter input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 70%; /* Adjust width for better layout */
+}
+
+.filter-button,
+.add-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filter-button {
+  background-color: #007bff;
+  color: white;
+  margin-left: 10px;
+}
+
+.add-button {
+  background-color: #28a745;
+  color: white;
+}
+
+/* Employee table styles */
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employee-table th,
+.employee-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.employee-table th {
+  background-color: #f2f2f2;
+}
+
+.edit-button,
+.delete-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: #0fac1c;
+  color: white;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Pagination styles */
+.pagination {
+  margin-top: 20px;
+}
+
+.page-button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  background: white;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.page-button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Popup styles */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure popup is on top */
+}
+
+.popup-content {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%; /* Make it responsive */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative; /* For the close button */
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-header h2 {
+  margin: 0;
+}
+
+.close-button {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-color: #007bff; /* Highlight border on focus */
+  outline: none;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.id-display {
+  padding: 10px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 16px;
+}

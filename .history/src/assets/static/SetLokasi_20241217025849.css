@@ -1,0 +1,148 @@
+/* SetLokasi.css */
+
+.set-lokasi-layout {
+  display: flex;
+  height: 100vh;
+  background-color: #f8faff;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #f0f4ff;
+  padding-top: 20px;
+}
+
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar-header .logo {
+  width: 150px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-menu li {
+  margin: 10px 0;
+}
+
+.sidebar-menu li a {
+  color: #000;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Style for active and hover states */
+.sidebar-menu li a.active,
+.sidebar-menu li a:hover {
+  background-color: #4285f4;
+  color: #ffffff;
+}
+
+.sidebar-menu li a.active {
+  font-weight: bold;
+}
+
+.sidebar-menu li a:hover {
+  background-color: #357ae8; /* Slightly darker shade for hover effect */
+}
+
+.set-lokasi-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.set-lokasi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.set-lokasi-header h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info .user-icon {
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  padding: 8px 12px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.location-settings {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.location-card label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #666;
+}
+
+.location-card input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.map-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.map-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.back-button,
+.setting-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.back-button {
+  background-color: #dce3ff;
+  color: #000;
+}
+
+.setting-button {
+  background-color: #4285f4;
+  color: #fff;
+}

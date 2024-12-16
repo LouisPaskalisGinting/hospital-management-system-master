@@ -1,0 +1,266 @@
+/* General Styles */
+body {
+  font-family: "Roboto", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333333;
+}
+
+.dashboard-layout {
+  display: flex;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  background-color: #f7f8fc;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-header h2 {
+  color: #333;
+}
+
+.sidebar-menu {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.sidebar-menu li {
+  width: 100%;
+  text-align: center;
+}
+
+.sidebar-menu li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  padding: 15px;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li a.active {
+  background-color: #e1e5ee;
+  color: #0a74da;
+  font-weight: bold;
+}
+
+/* Content Styles */
+.content {
+  flex: 1;
+  padding: 2rem;
+  background-color: #ffffff;
+  overflow-y: auto;
+  margin-left: 10px;
+}
+
+.content h2 {
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.search-filter {
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 10px 20px;
+}
+
+.add-button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-button:hover {
+  background-color: #084c9f;
+}
+
+/* Table and Form Controls */
+.cuti-table .controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  width: 200px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.entries-dropdown {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.employee-table th,
+.employee-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #e1e5ee;
+}
+
+.employee-table th {
+  color: #666;
+  background-color: #ccc;
+  font-weight: bold;
+}
+
+.employee-table tr:nth-child(odd) {
+  background-color: rgba(239, 239, 239, 0.9);
+}
+
+.employee-table .edit-button,
+.employee-table .delete-button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+}
+
+.employee-table .edit-button {
+  color: #ffffff;
+  background-color: #0a74da;
+}
+
+.employee-table .delete-button {
+  color: #ffffff;
+  background-color: #eb5757;
+}
+
+.employee-table .edit-button:hover {
+  background-color: #084c9f;
+}
+
+.employee-table .delete-button:hover {
+  background-color: #f80a0a;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.page-button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #9e0b0b;
+  background-color: #ffffff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.page-button.active {
+  background-color: #0a74da;
+  color: #ffffff;
+}
+
+.page-button:hover {
+  background-color: #e1e5ee;
+}
+/* Popup Styles */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.popup-content h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.popup-content label {
+  display: block;
+  font-size: 0.9rem;
+  color: #0d62e2;
+  margin-bottom: 5px;
+}
+
+.popup-content input,
+.popup-content select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.popup-content button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.close-button {
+  background-color: #6c757d;
+  color: white;
+  margin-left: 10px;
+}
+
+.close-button:hover {
+  background-color: #5a6268;
+  transform: scale(1.05);
+}
+
+/* Overlay for Popup */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
