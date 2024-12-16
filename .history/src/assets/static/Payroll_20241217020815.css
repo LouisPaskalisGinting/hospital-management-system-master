@@ -1,0 +1,142 @@
+/* Header Section */
+.header {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Controls Section (search, filter, etc.) */
+.payroll-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.payroll-controls input[type="text"],
+.payroll-controls select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  flex: 1;
+  max-width: 300px;
+  font-size: 14px;
+}
+
+.payroll-controls select {
+  flex: unset;
+}
+
+.payroll-controls button {
+  padding: 10px 20px;
+  background-color: #0056b3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.payroll-controls button:hover {
+  background-color: #003f8a;
+  transform: scale(1.05);
+}
+
+/* Table Section */
+.payroll-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.payroll-table th,
+.payroll-table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.payroll-table th {
+  background-color: #f8f9fa;
+  color: #333;
+  font-weight: bold;
+}
+
+.payroll-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.payroll-table tbody tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Detail Button */
+.detail-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.detail-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+/* Status Labels */
+.status-taken,
+.status-pending {
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 12px;
+  min-width: 90px;
+  display: inline-block;
+}
+
+.status-taken {
+  background-color: #28a745;
+}
+
+.status-pending {
+  background-color: #dc3545;
+}
+
+/* Pagination Section */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.page-button,
+.active-page {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.active-page {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.page-button:hover {
+  background-color: #f1f1f1;
+  transform: scale(1.05);
+}
